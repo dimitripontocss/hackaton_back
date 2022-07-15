@@ -1,12 +1,8 @@
-import joi from 'joi';
-import { db } from '../databases/mongo.js';
 import { stripHtml } from "string-strip-html";
+import { db } from '../databases/mongo.js';
+import {signupSchema} from '../schemas/authSchemas.js';
 
-const signupSchema = joi.object({
-    name: joi.string().required().min(3),
-    email: joi.string().email().required(),
-    password:joi.string().pattern(/(?=.*?[A-Z])/).pattern(/(?=.*?[a-z])/).pattern(/(?=.*?[0-9])/).pattern(/(?=.*?[#?!@$%^&*-])/).min(8).required(),
-});
+
 
 async function generateErrorSignUp(object){
     const {error} = signupSchema.validate(object,{abortEarly:false});
@@ -57,7 +53,6 @@ async function signupValidation(req, res, next) {
         };
 
         const errorMessages= await generateErrorSignUp(body);
-        console.log(errorMessages);
         if(errorMessages) return res.status(422).send(errorMessages); 
 
         const searchEmail = await db.users.findOne({ email: body.email });

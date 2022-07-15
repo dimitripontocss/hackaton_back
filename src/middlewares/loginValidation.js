@@ -1,12 +1,7 @@
-import joi from 'joi';
+import { loginSchema } from '../schemas/authSchemas.js';
 import bcrypt from 'bcrypt';
 import { db } from '../databases/mongo.js';
 import { stripHtml } from "string-strip-html";
-
-const loginSchema = joi.object({
-    email: joi.required(),
-    password: joi.required(),
-});
 
 async function generateErrorLogin(object){
     const {error} = loginSchema.validate(object);

@@ -20,7 +20,7 @@ export async function login(_req, res) {
         );
 
         return res.status(200).send({
-            username: user.name,
+            userName: user.name,
             token
         });
 
