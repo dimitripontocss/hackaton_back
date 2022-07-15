@@ -17,8 +17,7 @@ export async function connectDatabase () {
         db={
             users:database.collection('users'),
             sessions:database.collection('sessions'),
-            categories: database.collection('categories'),
-            subcategories :database.collection('subcategories')
+            notes:database.collection('notes')
         } 
         console.log("Mongo conected");
     } catch (e) {
