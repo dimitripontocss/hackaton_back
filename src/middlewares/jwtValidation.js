@@ -4,7 +4,6 @@ export async function jtwAuth(req,res,next){
     try{
         const key = process.env.JWT_SECRET;
         const { authorization } = req.headers;
-        console.log(authorization)
         if(!authorization){
             return res.sendStatus(204);
         }
