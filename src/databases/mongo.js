@@ -3,14 +3,25 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const mongoClient = new MongoClient(process.env.MONGO_URI);
+const MONGO_URI = process.env.MONGO_URI;
+const DATABASE = process.env.DATABASE;
 
-try {
-    await mongoClient.connect()
-    const db = mongoClient.db(process.env.DATABASE) 
-    console.log("Mongo conected")
-} catch (e) {
+const mongoClient = new MongoClient(MONGO_URI);
+
+export let db;
+
+export async function connectDatabase () {
+    try{
+        await mongoClient.connect();
+        const database = mongoClient.db(DATABASE);
+        db={
+            users:database.collection('users'),
+            sessions:database.collection('sessions'),
+            categories: database.collection('categories'),
+            subcategories :database.collection('subcategories')
+        } 
+        console.log("Mongo conected");
+    } catch (e) {
     console.log("Not conected to mongo error:", e)
+    }
 }
-
-export default db;
